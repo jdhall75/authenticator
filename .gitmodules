@@ -1,0 +1,3 @@
+[submodule "hotpie"]
+	path = lib/hotpie
+	url = https://github.com/gingerlime/hotpie
