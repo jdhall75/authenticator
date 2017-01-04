@@ -5,7 +5,7 @@ import os
 from hashlib import sha512, sha256
 import base64
 
-from lib.hotpie import TOTP
+from lib.oath.hotpie import TOTP
 
 
 b32Key = ''
