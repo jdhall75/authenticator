@@ -1,17 +1,21 @@
 import urwid
+import json
 
-choices = u'Chapman Cleese Gilliam Idle Jones Palin'.split()
+#choices = u'Chapman Cleese Gilliam Idle Jones Palin'.split()
+
+with open('keys.json') as data_file:
+    keys = json.load(data_file)
 
 def menu(title, choices):
     body = [urwid.Text(title), urwid.Divider()]
-    for c in choices:
-        button = urwid.Button(c)
+    for c in choices['keys']:
+        button = urwid.Button(str(c['key']))
         urwid.connect_signal(button, 'click', item_chosen, c)
         body.append(urwid.AttrMap(button, None, focus_map='reversed'))
     return urwid.ListBox(urwid.SimpleFocusListWalker(body))
 
 def item_chosen(button, choice):
-    response = urwid.Text([u'You chose ', choice, u'\n'])
+    response = urwid.Text([u'You chose ', choice['key'], u'\n'])
     done = urwid.Button(u'Ok')
     urwid.connect_signal(done, 'click', exit_program)
     main.original_widget = urwid.Filler(urwid.Pile([response,
@@ -20,7 +24,7 @@ def item_chosen(button, choice):
 def exit_program(button):
     raise urwid.ExitMainLoop()
 
-main = urwid.Padding(menu(u'Pythons', choices), left=2, right=2)
+main = urwid.Padding(menu(u'Keys', keys), left=2, right=2)
 top = urwid.Overlay(main, urwid.SolidFill(u'\N{MEDIUM SHADE}'),
     align='center', width=('relative', 60),
     valign='middle', height=('relative', 60),
